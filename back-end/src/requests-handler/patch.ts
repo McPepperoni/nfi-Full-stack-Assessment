@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import sqlite from "sqlite";
 import { TBalance, TResponse } from "../types";
-import { handleParams } from "../utils";
+import { handleBody, handleParams } from "../utils";
 import { checkForUser } from "./get";
 
 export const UpdateBalance = async (
@@ -17,7 +17,7 @@ export const UpdateBalance = async (
 
   const operation = handleParams("operation", req, res, response);
   const user_id = handleParams("user_id", req, res, response);
-  const amount = parseFloat(handleParams("amount", req, res, response));
+  const amount = parseFloat(handleBody("amount", req, res, response));
 
   if (await checkForUser(user_id, db)) {
     response.message = `No user with id: ${user_id}`;
@@ -27,11 +27,15 @@ export const UpdateBalance = async (
   var data: TBalance = {
     id: "",
     user_id: "",
+    display_name: "",
     balance: 0,
   };
 
   await db
-    .get(`SELECT * FROM balance WHERE user_id="${user_id}";`)
+    .get(
+      `SELECT 
+    * FROM balance INNER JOIN users ON balance.user_id=users.id WHERE user_id="${user_id}";`
+    )
     .then((v) => {
       data = { ...v };
     })

@@ -15,3 +15,21 @@ export const handleParams = (
 
   return result ? result.toString() : "";
 };
+
+export const handleBody = (
+  field: string,
+  req: Request,
+  res: Response,
+  response: TResponse
+) => {
+  console.log(req.body);
+
+  const result = req.body[field];
+
+  if (result == undefined) {
+    response.message = `${field} does not exist`;
+    res.status(404).send(response);
+  }
+
+  return result ? result.toString() : "";
+};

@@ -2,7 +2,7 @@ import { randomUUID } from "crypto";
 import { Request, Response } from "express";
 import sqlite from "sqlite";
 import { TBalance, TResponse, TUser } from "../types";
-import { handleParams } from "../utils";
+import { handleBody } from "../utils";
 import { checkForUser } from "./get";
 
 //Create new User with balance
@@ -19,7 +19,7 @@ export const CreateUser = async (
 
   const user: TUser = {
     id: `${Date.now().toString(36)}-${randomUUID()}`,
-    display_name: handleParams("display_name", req, res, response),
+    display_name: handleBody("display_name", req, res, response),
   };
 
   if (!(await checkForUser(user.id, db))) {
@@ -41,6 +41,7 @@ export const CreateUser = async (
   const balance: TBalance = {
     id: `${Date.now().toString(36)}-${randomUUID()}`,
     user_id: user.id,
+    display_name: user.display_name,
     balance: 0,
   };
 
@@ -60,10 +61,7 @@ export const CreateUser = async (
   response = {
     response: 200,
     message: "successfully create user",
-    data: {
-      user,
-      balance,
-    },
+    data: balance,
   };
 
   return res.status(200).send(response);

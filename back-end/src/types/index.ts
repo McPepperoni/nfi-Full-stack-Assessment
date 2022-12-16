@@ -6,6 +6,7 @@ export type TUser = {
 export type TBalance = {
   id: string;
   user_id: string;
+  display_name: string;
   balance: number;
 };
 
