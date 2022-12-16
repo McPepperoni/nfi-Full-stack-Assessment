@@ -36,6 +36,11 @@ const StyledNotification = styled.div<{ show: boolean }>`
   padding: 10px 30px;
   top: 0;
   text-align: center;
+
+  @media (max-width: 600px) {
+    border-radius: 0;
+    width: 100%;
+  }
 `;
 
 const StyledEscapeButton = styled.button`

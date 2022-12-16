@@ -128,7 +128,7 @@ const StyledForm = styled.form<{ show: boolean }>`
   color: #333;
   width: calc(100%- 10px);
   padding: 10px 50px 30px 50px;
-  width: 380px;
+  width: calc(100% - 20px);
   padding: ${(props) => (props.show ? "10px 50px 30px 50px" : "0px 50px")};
   height: ${(props) => (props.show ? "340px" : "0px")};
   border-radius: 20px 0 20px 20px;

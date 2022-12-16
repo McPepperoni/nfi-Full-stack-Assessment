@@ -163,44 +163,48 @@ function App() {
                     fontSize={40}
                   />
                 </StyledBalance>
-                <StyledButtonWrapper>
-                  <StyledButton
-                    ref={depositButtonRef}
-                    onClick={() =>
-                      handleButtonOnClick(balanceDisplay.user_id, "deposit")
-                    }
-                    disabled={fetchingDataDeposit || buttonConditions.deposit}
-                  >
-                    <Tooltip
-                      text="To deposit your money"
-                      parent={depositButtonRef}
-                    />
-                    {fetchingDataDeposit ? "Depositing..." : "Deposit (+)"}
-                  </StyledButton>
-                  <StyledButton
-                    ref={withdrawButtonRef}
-                    disabled={fetchingDataWithdraw || buttonConditions.withdraw}
-                    onClick={() =>
-                      handleButtonOnClick(balanceDisplay.user_id, "withdraw")
-                    }
-                  >
-                    {fetchingDataWithdraw ? "Withdrawing..." : "Withdraw (-)"}
-                    <Tooltip
-                      text={
-                        !buttonConditions.withdraw
-                          ? "To withdraw your money"
-                          : "Your balance is in sufficient to withdraw"
+                <StyledFunctionGroup>
+                  <StyledButtonWrapper>
+                    <StyledButton
+                      ref={depositButtonRef}
+                      onClick={() =>
+                        handleButtonOnClick(balanceDisplay.user_id, "deposit")
                       }
-                      parent={withdrawButtonRef}
-                    />
-                  </StyledButton>
-                </StyledButtonWrapper>
-                <StyleAmountInput
-                  type="text"
-                  placeholder="Please input amount"
-                  ref={inputRef}
-                  onChange={handleInput}
-                />
+                      disabled={fetchingDataDeposit || buttonConditions.deposit}
+                    >
+                      <Tooltip
+                        text="To deposit your money"
+                        parent={depositButtonRef}
+                      />
+                      {fetchingDataDeposit ? "Depositing..." : "Deposit (+)"}
+                    </StyledButton>
+                    <StyledButton
+                      ref={withdrawButtonRef}
+                      disabled={
+                        fetchingDataWithdraw || buttonConditions.withdraw
+                      }
+                      onClick={() =>
+                        handleButtonOnClick(balanceDisplay.user_id, "withdraw")
+                      }
+                    >
+                      {fetchingDataWithdraw ? "Withdrawing..." : "Withdraw (-)"}
+                      <Tooltip
+                        text={
+                          !buttonConditions.withdraw
+                            ? "To withdraw your money"
+                            : "Your balance is in sufficient to withdraw"
+                        }
+                        parent={withdrawButtonRef}
+                      />
+                    </StyledButton>
+                  </StyledButtonWrapper>
+                  <StyleAmountInput
+                    type="text"
+                    placeholder="Please input amount"
+                    ref={inputRef}
+                    onChange={handleInput}
+                  />
+                </StyledFunctionGroup>
               </StyledGroup>
             </>
           )}
@@ -234,6 +238,12 @@ const StyledPanel = styled.div`
   align-items: center;
   padding: 40px 60px;
   position: relative;
+
+  @media (max-width: 450px) {
+    width: 300px;
+    height: 400px;
+    padding: 30px 30px;
+  }
 `;
 
 const StyledName = styled.p`
@@ -246,6 +256,10 @@ const StyledMessage = styled.p`
   width: 100%;
   font-size: 25px;
   font-weight: 900;
+
+  @media (max-width: 450px) {
+    font-size: 16px;
+  }
 `;
 
 const StyledId = styled.p`
@@ -257,10 +271,16 @@ const StyledId = styled.p`
 
 const StyledGroup = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  height: 100%;
+`;
+
+const StyledFunctionGroup = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 const StyledBalance = styled.div`
@@ -280,6 +300,8 @@ const StyledButtonWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  margin-bottom: 15px;
+  min-height: 80px;
 `;
 
 const StyledButton = styled.button`

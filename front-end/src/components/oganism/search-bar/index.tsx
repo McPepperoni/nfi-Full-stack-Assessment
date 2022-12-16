@@ -34,7 +34,10 @@ const SearchBar = (props: Props) => {
   return (
     <StyledContainer>
       <StyledInputOutline active={active}>
-        <StyledSearchBar onMouseOver={handleMouseOver}>
+        <StyledSearchBar
+          onMouseOver={handleMouseOver}
+          onClick={handleMouseOver}
+        >
           <StyledIconContainer>
             <FaSearch />
           </StyledIconContainer>
@@ -286,7 +289,7 @@ const StyledContainer = styled.div`
   bottom: 100%;
   left: 0;
   padding-bottom: 50px;
-  width: 400px;
+  width: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
