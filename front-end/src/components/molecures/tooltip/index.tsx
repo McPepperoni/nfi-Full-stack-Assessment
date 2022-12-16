@@ -9,6 +9,7 @@ type Props = {
 const Tooltip = (props: Props) => {
   const [show, setShow] = useState(false);
 
+  //adjust font size according to container width
   useEffect(() => {
     if (props.parent && props.parent.current) {
       props.parent.current.onmouseover = () => {

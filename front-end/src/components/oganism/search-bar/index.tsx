@@ -20,7 +20,7 @@ const SearchBar = (props: Props) => {
 
   const handleMouseOver = () => {
     setActive(true);
-    if (inputRef && inputRef.current) {
+    if (inputRef && inputRef.current && !active) {
       inputRef.current.focus();
     }
   };

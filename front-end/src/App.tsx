@@ -10,13 +10,16 @@ import { TSearchItem, TNotification, TBalance } from "./types";
 import { formatBalance } from "./utils";
 
 function App() {
-  //states for notifications
+  //states
   const [createUserNotification, setCreateUserNotification] = useState(false);
   const [errNotification, setErrNotification] = useState(false);
   const [fetchingDataSearch, setFetchingDataSearch] = useState(false);
   const [fetchingDataDisplay, setFetchingDataDisplay] = useState(false);
   const [fetchingDataDeposit, setFetchingDataDeposit] = useState(false);
   const [fetchingDataWithdraw, setFetchingDataWithdraw] = useState(false);
+
+  const [err, setErr] = useState("");
+  const [amount, setAmount] = useState(0);
 
   const [searchResult, setSearchResult] = useState<TSearchItem>({
     byName: [],
@@ -29,17 +32,12 @@ function App() {
     balance: 0,
   });
 
-  const [amount, setAmount] = useState(0);
-
+  //refs
   const depositButtonRef = useRef(null);
   const withdrawButtonRef = useRef(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [err, setErr] = useState("");
-  //metamask variables
-
-  //functions control notification state control
-  //functions to control search
+  //functions to control search engine
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFetchingDataSearch(true);
 
@@ -77,6 +75,7 @@ function App() {
       value === "" ? "$ 0" : `$ ${formatBalance(parseFloat(value) / 100)}`;
   };
 
+  //function handling deposit and withdraw
   const handleButtonOnClick = async (id: string, operation: string) => {
     operation === "deposit"
       ? setFetchingDataDeposit(true)
@@ -118,6 +117,7 @@ function App() {
     },
   ];
 
+  //condition for function buttons
   const buttonConditions = {
     deposit: amount === 0,
     withdraw:
@@ -129,10 +129,12 @@ function App() {
   return (
     <>
       <StyledContainer>
+        {/* Notifications */}
         {Notifications.map((n) => (
           <Notification {...n} />
         ))}
         <StyledPanel>
+          {/* Search bar */}
           <SearchBar
             items={searchResult}
             fetchingData={fetchingDataSearch}
@@ -140,12 +142,14 @@ function App() {
             onChange={handleOnChange}
             onClickItem={handleOnClickItem}
           />
+          {/* Registering */}
           <Register
             setErr={setErr}
             setSetErrNotificationState={setErrNotification}
             setSetNotificationState={setCreateUserNotification}
             setBalanceDisplay={setBalanceDisplay}
           />
+          {/* Display info */}
           {balanceDisplay.id === "" || fetchingDataDisplay ? (
             <StyledMessage>
               {fetchingDataDisplay

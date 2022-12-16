@@ -23,12 +23,20 @@ const Register = (props: Props) => {
   const submitRef = useRef<HTMLButtonElement>(null);
 
   const handleFormAction = () => {
-    if (inputRef && inputRef.current) {
+    // UI handling
+    if (inputRef && inputRef.current && !openForm) {
       inputRef.current.focus();
     }
     setOpenForm(!openForm);
   };
 
+  const handleOnBlur = () => {
+    setTimeout(() => {
+      setOpenForm(false);
+    }, 200);
+  };
+
+  //On submit form
   const handleOnSubmit = (e: React.FormEvent) => {
     fetch(`/createUser`, {
       method: "POST",
@@ -51,12 +59,6 @@ const Register = (props: Props) => {
     }
 
     e.preventDefault();
-  };
-
-  const handleOnBlur = () => {
-    setTimeout(() => {
-      setOpenForm(false);
-    }, 200);
   };
 
   return (
